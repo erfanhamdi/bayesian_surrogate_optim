@@ -8,7 +8,7 @@ from config import CFG
 
 
 def get_data():
-  data_address = "/Users/venus/Erfan/paper_based_pump/data_sheet_1.csv"
+  data_address = "data/data_sheet_1.csv"
   data = pd.read_csv(data_address)
 
   train_columns = ['ngy', 'wg', 'gr-tt', 'case', 'nlz', 'tstcase']
@@ -36,13 +36,6 @@ def train_model(model, X_train, y_train, X_test, y_test):
     return model, mse, r2
 
 def eval_func(model, scaler, ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, tstcase_2):
-    X = np.array([ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, tstcase_2])
-    X = X.reshape((1, 8))
-    X = scaler.transform(X)
-    out = model.predict(X)
-    return out[0]
-
-def dict_eval_func(model, scaler, **kwargs):
     X = np.array([ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, tstcase_2])
     X = X.reshape((1, 8))
     X = scaler.transform(X)
