@@ -1,0 +1,22 @@
+{
+    "os": "macOS-12.5.1-x86_64-i386-64bit",
+    "python": "3.8.9",
+    "heartbeatAt": "2022-09-07T12:11:56.223288",
+    "startedAt": "2022-09-07T12:11:53.077687",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/venus/Erfan/paper_based_pump/data.py",
+    "codePath": "data.py",
+    "git": {
+        "remote": "git@github.com-erfanhamdi:erfanhamdi/bayesian_surrogate_optim.git",
+        "commit": "854a86f916ada0dbd8c86db3e224ad33147e55c5"
+    },
+    "email": "erfan.hamdi@gmail.com",
+    "root": "/Users/venus/Erfan/paper_based_pump",
+    "host": "MBP.local",
+    "username": "venus",
+    "executable": "/Users/venus/Erfan/paper_based_pump/bayes_env/bin/python"
+}

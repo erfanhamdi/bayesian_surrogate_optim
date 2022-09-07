@@ -1,0 +1,9 @@
+2022-09-07 17:05:13,543 INFO    StreamThr :59561 [internal.py:wandb_internal():90] W&B internal server running at pid: 59561, started at: 2022-09-07 17:05:13.541899
+2022-09-07 17:05:13,550 DEBUG   HandlerThread:59561 [handler.py:handle_request():141] handle_request: status
+2022-09-07 17:05:13,550 DEBUG   SenderThread:59561 [sender.py:send_request():316] send_request: status
+2022-09-07 17:05:13,554 DEBUG   SenderThread:59561 [sender.py:send():302] send: header
+2022-09-07 17:05:13,556 INFO    WriterThread:59561 [datastore.py:open_for_write():75] open: /Users/venus/Erfan/paper_based_pump/wandb/run-20220907_170513-1dffebd1/run-1dffebd1.wandb
+2022-09-07 17:05:13,574 DEBUG   SenderThread:59561 [sender.py:send():302] send: run
+2022-09-07 17:05:43,598 DEBUG   HandlerThread:59561 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-07 17:05:49,586 INFO    MainThread:59561 [internal.py:handle_exit():80] Internal process exited
+2022-09-07 17:05:49,588 WARNING MsgRouterThr:59561 [router.py:message_loop():73] EOFError seen in message_loop

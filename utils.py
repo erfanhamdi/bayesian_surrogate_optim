@@ -41,3 +41,14 @@ def eval_func(model, scaler, ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, ts
     X = scaler.transform(X)
     out = model.predict(X)
     return out[0]
+
+def eval_fun_discretizer(model, scaler, ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, tstcase_2):
+    tstcase_0 = int(tstcase_0)
+    tstcase_1 = int(tstcase_1)
+    tstcase_2 = int(tstcase_2)
+    ngy = int(ngy)
+    nlz = int(nlz)
+    wg = int(wg)
+    case = int(case)
+    out = eval_func(model, scaler, ngy, wg, gr_tt, case, nlz, tstcase_0, tstcase_1, tstcase_2)
+    return out

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/venus/Erfan/paper_based_pump/data.py", line 23, in <module>
+    X, y, X_scaler, y_scaler = get_data()
+  File "/Users/venus/Erfan/paper_based_pump/utils.py", line 22, in get_data
+    X_scaler = CFG.scaler()
+TypeError: 'MinMaxScaler' object is not callable

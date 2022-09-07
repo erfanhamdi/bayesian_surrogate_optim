@@ -1,4 +1,7 @@
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+
 class CFG:
+    scaler = MinMaxScaler()
     run_key = 'DAE_LIFT_LOSS' #due to long run time prefer to split into sections of 600 epochs
     out_path = '/saved_models/'
 

@@ -1,0 +1,39 @@
+Linear Regression Model
+mse = 0.0060769302419600366
+r2 = 0.747642221745001
+Ridge Regression Model
+mse = 0.009370199887316735
+r2 = 0.6108820191745679
+Random Forest Model
+mse = 0.0001473722549042809
+r2 = 0.9938800457890268
+XGBoost Model
+mse = 0.00012654497402176423
+r2 = 0.9947449440388559
+|   iter    |  target   |   case    |   gr_tt   |    ngy    |    nlz    | tstcase_0 | tstcase_1 | tstcase_2 |    wg     |
+-------------------------------------------------------------------------------------------------------------------------
+/Users/venus/Erfan/paper_based_pump/utils.py:30: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
+  model.fit(X_train, y_train)
+Traceback (most recent call last):
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/bayes_opt/target_space.py", line 191, in probe
+    target = self._cache[_hashable(x)]
+KeyError: (4.17022004702574, 0.7203244934421581, 0.0017156222601732996, 1.5116628631591988, 0.14675589081711304, 0.0923385947687978, 0.1862602113776709, 5.528971632688764)
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/Users/venus/Erfan/paper_based_pump/data.py", line 59, in <module>
+    optimizer.maximize(
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/bayes_opt/bayesian_optimization.py", line 283, in maximize
+    self.probe(x_probe, lazy=False)
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/bayes_opt/bayesian_optimization.py", line 178, in probe
+    self._space.probe(params)
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/bayes_opt/target_space.py", line 194, in probe
+    target = self.target_func(**params)
+  File "/Users/venus/Erfan/paper_based_pump/utils.py", line 41, in eval_func
+    X = scaler.transform(X)
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/sklearn/preprocessing/_data.py", line 499, in transform
+    X = self._validate_data(
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/sklearn/base.py", line 600, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/sklearn/base.py", line 400, in _check_n_features
+    raise ValueError(
+ValueError: X has 8 features, but MinMaxScaler is expecting 1 features as input.

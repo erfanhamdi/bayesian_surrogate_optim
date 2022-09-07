@@ -1,0 +1,26 @@
+Linear Regression Model
+mse = 0.0060769302419600366
+r2 = 0.747642221745001
+Ridge Regression Model
+mse = 0.009370199887316735
+r2 = 0.6108820191745679
+Random Forest Model
+mse = 0.0001473722549042809
+r2 = 0.9938800457890268
+XGBoost Model
+mse = 0.00012654497402176423
+r2 = 0.9947449440388559
+/Users/venus/Erfan/paper_based_pump/utils.py:30: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
+  model.fit(X_train, y_train)
+Traceback (most recent call last):
+  File "/Users/venus/Erfan/paper_based_pump/data.py", line 49, in <module>
+    wandb.log_artifact("xgb_model")
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 255, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 2601, in log_artifact
+    return self._log_artifact(
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 2734, in _log_artifact
+    artifact, aliases = self._prepare_artifact(
+  File "/Users/venus/Erfan/paper_based_pump/bayes_env/lib/python3.8/site-packages/wandb/sdk/wandb_run.py", line 2821, in _prepare_artifact
+    raise ValueError(
+ValueError: path must be a file, directory or externalreference like s3://bucket/path
