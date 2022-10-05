@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import pickle
 from functools import partial
-import wandb
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
@@ -17,32 +16,26 @@ from utils import get_data, train_model, eval_func
 
 if __name__ == "__main__":
 
-  # run = wandb.init(project="bayes_optim", entity="erfanhmd")
-
   X, y, X_scaler, y_scaler = get_data()
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
   print("Linear Regression Model")
   model = LinearRegression()
   linreg_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Linear Regression", "params" : [], "MSE":mse, "R2":r2})
 
   print("Ridge Regression Model")
   model = Ridge(alpha=RIDGE_CFG.alpha, solver=RIDGE_CFG.solver)
   ridge_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Ridge Regression", "params" : [RIDGE_CFG.alpha, RIDGE_CFG.solver], "MSE":mse, "R2":r2})
 
   print("Random Forest Model")
   model = RandomForestRegressor(n_estimators=RF_CFG.n_estimators, random_state=RF_CFG.random_state, max_depth=RF_CFG.max_depth)
   rf_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Random Forest", "params" : [RF_CFG.n_estimators, RF_CFG.random_state, RF_CFG.max_depth], "MSE":mse, "R2":r2})
 
   print("XGBoost Model")
   xgb_model = xgb.XGBRegressor(n_estimators=XGB_CFG.n_estimators, max_depth=XGB_CFG.max_depth, learning_rate=XGB_CFG.learning_rate, random_state=XGB_CFG.random_state)
   xgb_model, mse, r2 = train_model(xgb_model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "XGBoost", "params" : [XGB_CFG.n_estimators, XGB_CFG.max_depth, XGB_CFG.learning_rate, XGB_CFG.random_state], "MSE":mse, "R2":r2})
-# Bounded region of parameter space
 
+# Bounded region of parameter space
   eval_model = partial(eval_func, xgb_model, X_scaler)
 
   # eval_model[X[0]]
@@ -60,6 +53,3 @@ if __name__ == "__main__":
       n_iter=30,
   )
   print(optimizer.max)
-  # wandb.log({"max" : optimizer.max['target']})
-  # X_scaler.inverse_transform(optimizer.max['target'])
-  # run.finish()
