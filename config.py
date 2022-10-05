@@ -25,3 +25,7 @@ class LGBM_CFG:
     max_depth = 200
     learning_rate = 0.1
     random_state = 42
+
+class PEAK_CFG:
+    plateau_size = 10
+    prominance = 0.1

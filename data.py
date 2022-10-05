@@ -1,66 +1,53 @@
-import pandas as pd
 import numpy as np
-import pickle
-from functools import partial
-import wandb
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from scipy.signal import find_peaks
+import matplotlib.pyplot as plt
+# from config import PEAK_CFG
+
+class PEAK_CFG:
+    plateau_size = None
+    prominance = 0.0000001
+    # prominance = None
+    height = 0.0000001
+    distance = 100
+    threshold = 0.000001
 
 
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.ensemble import RandomForestRegressor
+def get_velocity_profile(tst_case, flow_rate_data):
+    velocity_profile = flow_rate_data[tst_case]
+    return velocity_profile
 
-import xgboost as xgb
-from bayes_opt import BayesianOptimization
-
-from config import CFG, RIDGE_CFG, RF_CFG, XGB_CFG, LGBM_CFG
-from utils import get_data, train_model, eval_func
+def detect_peak(x, tst_case_name):
+    """
+    Detect peak in velocity profile
+    
+    scipy.signal.find_peaks hyperparameters are:
+    height: minimum height of peaks
+    distance: minimum distance between peaks
+    width: minimum width of peaks
+    prominence: minimum prominence of peaks
+    plateau_size: minimum plateau size of peaks
+    """
+    plt.figure()
+    peaks, _ = find_peaks(x, plateau_size=PEAK_CFG.plateau_size,
+                            prominence=PEAK_CFG.prominance,
+                            height=PEAK_CFG.height,
+                            distance=PEAK_CFG.distance,
+                            threshold=PEAK_CFG.threshold)
+    plt.plot(x)
+    plt.plot(peaks, x[peaks], "x")
+    plt.plot(np.zeros_like(x), "--", color="gray")
+    plt.title(tst_case_name)
+    plt.show()
 
 if __name__ == "__main__":
-
-  # run = wandb.init(project="bayes_optim", entity="erfanhmd")
-
-  X, y, X_scaler, y_scaler = get_data()
-  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-  print("Linear Regression Model")
-  model = LinearRegression()
-  linreg_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Linear Regression", "params" : [], "MSE":mse, "R2":r2})
-
-  print("Ridge Regression Model")
-  model = Ridge(alpha=RIDGE_CFG.alpha, solver=RIDGE_CFG.solver)
-  ridge_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Ridge Regression", "params" : [RIDGE_CFG.alpha, RIDGE_CFG.solver], "MSE":mse, "R2":r2})
-
-  print("Random Forest Model")
-  model = RandomForestRegressor(n_estimators=RF_CFG.n_estimators, random_state=RF_CFG.random_state, max_depth=RF_CFG.max_depth)
-  rf_model, mse, r2 = train_model(model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "Random Forest", "params" : [RF_CFG.n_estimators, RF_CFG.random_state, RF_CFG.max_depth], "MSE":mse, "R2":r2})
-
-  print("XGBoost Model")
-  xgb_model = xgb.XGBRegressor(n_estimators=XGB_CFG.n_estimators, max_depth=XGB_CFG.max_depth, learning_rate=XGB_CFG.learning_rate, random_state=XGB_CFG.random_state)
-  xgb_model, mse, r2 = train_model(xgb_model, X_train, y_train, X_test, y_test)
-  # wandb.log({"name" : "XGBoost", "params" : [XGB_CFG.n_estimators, XGB_CFG.max_depth, XGB_CFG.learning_rate, XGB_CFG.random_state], "MSE":mse, "R2":r2})
-# Bounded region of parameter space
-
-  eval_model = partial(eval_func, xgb_model, X_scaler)
-
-  # eval_model[X[0]]
-  pbounds = {'ngy':(0, 15), 'wg':(0, 16), 'gr_tt':(0, 1), 'case':(0, 10), 'nlz':(0, 5), 'tstcase_0':(0, 1), 'tstcase_1':(0, 1), 'tstcase_2':(0, 1)}
-  # wandb.log({"pbounds" : pbounds})
-
-  optimizer = BayesianOptimization(
-      f = eval_model,
-      pbounds = pbounds,
-      random_state = 1,
-  )
-
-  optimizer.maximize(
-      init_points=10,
-      n_iter=30,
-  )
-  print(optimizer.max)
-  # wandb.log({"max" : optimizer.max['target']})
-  # X_scaler.inverse_transform(optimizer.max['target'])
-  # run.finish()
+    param_data_address = "data/Results_All.csv"
+    flow_rate_data_address = "data/Results_Flow rate.csv"
+    param_data = pd.read_csv(param_data_address)
+    flow_rate_data = pd.read_csv(flow_rate_data_address)
+    test_cases = flow_rate_data.columns[1:]
+    test_cases = [f'tst-12.{i}' for i in range(1, 11)]
+    for tst_case in test_cases:
+        velocity_profile = get_velocity_profile(tst_case, flow_rate_data)
+        detect_peak(velocity_profile, tst_case)
